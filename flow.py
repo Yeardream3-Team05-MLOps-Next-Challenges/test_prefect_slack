@@ -11,6 +11,5 @@ if __name__ == "__main__":
         work_pool_name="docker-agent-pool",
         work_queue_name="docker-agent",
         image="test-prefect-docker:0.1",
-        push=False,
         cron="0 * * * *",
     )

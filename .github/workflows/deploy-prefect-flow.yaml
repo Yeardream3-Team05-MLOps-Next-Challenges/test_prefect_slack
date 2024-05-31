@@ -22,6 +22,7 @@ jobs:
       - name: Prefect Deploy
         env:
           PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
+          PREFECT_DEFAULT_DOCKER_BUILD_NAMESPACE: ${{ secrets.PREFECT_DOCKER_NAMESPACE }}
         run: |
           pip install -r requirements.txt
           python flow.py
