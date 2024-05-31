@@ -15,7 +15,7 @@ if __name__ == "__main__":
             name="test-prefect-docker",
             tag="0.2",
             #buildargs={"PYTHON_VERSION": "3.10"},
-            platform="linux/arm64"
+            platform="linux/amd64"
         ),
         cron="0 * * * *",
     )
