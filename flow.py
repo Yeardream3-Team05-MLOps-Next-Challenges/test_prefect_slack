@@ -13,9 +13,9 @@ if __name__ == "__main__":
         #image="test-prefect-docker:0.1",
         image=DeploymentImage(
             name="test-prefect-docker",
-            tag="0.2",
+            tag="0.3",
             #buildargs={"PYTHON_VERSION": "3.10"},
-            platform="linux/amd64"
+            platform="linux/arm64/v8"
         ),
         cron="0 * * * *",
     )
