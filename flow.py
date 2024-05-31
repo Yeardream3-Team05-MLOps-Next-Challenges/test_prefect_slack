@@ -10,6 +10,12 @@ if __name__ == "__main__":
         name="test-prefect-docker-deployment",
         work_pool_name="docker-agent-pool",
         work_queue_name="docker-agent",
-        image="test-prefect-docker:0.1",
+        #image="test-prefect-docker:0.1",
+        image=DeploymentImage(
+            name="test-prefect-docker",
+            tag="0.2",
+            build_kwargs={"buildargs": {"PYTHON_VERSION": "3.10"}, 
+                           "platform": "linux/arm64"},
+        ),
         cron="0 * * * *",
     )
