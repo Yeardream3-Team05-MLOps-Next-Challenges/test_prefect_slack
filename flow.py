@@ -10,6 +10,6 @@ if __name__ == "__main__":
         name="test-prefect-docker-deployment",
         work_pool_name="docker-agent-pool",
         work_queue_name="docker-agent",
-        image="http://team5-oracle.duckdns.org:19500/test-prefect-docker:0.1",
+        image="test-prefect-docker:0.1",
         cron="0 * * * *",
     )
