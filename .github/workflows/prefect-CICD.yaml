@@ -71,10 +71,10 @@ jobs:
         run: docker load -i myapp.tar
 
       - name: Tag Docker image for local registry
-        run: docker tag myapp:latest ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.5
+        run: docker tag myapp:latest ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.6
 
       - name: Push Docker image to local registry
-        run: docker push ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.5
+        run: docker push ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.6
 
       - name: action-slack
         uses: 8398a7/action-slack@v3
