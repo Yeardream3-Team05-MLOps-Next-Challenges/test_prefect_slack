@@ -63,7 +63,7 @@ jobs:
         run: docker load -i myapp.tar
 
       - name: Tag Docker image for local registry
-        run: docker tag my-image:latest ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.3
+        run: docker tag myapp:latest ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.3
 
       - name: Push Docker image to local registry
         run: docker push ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.3
