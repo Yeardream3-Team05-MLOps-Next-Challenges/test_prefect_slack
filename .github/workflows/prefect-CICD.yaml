@@ -26,6 +26,8 @@ jobs:
       
     - name: Save Docker image as artifact
       run: docker save myapp:latest -o myapp.tar
+      
+    - name: Upload Docker artifact
       uses: actions/upload-artifact@v2
       with:
         name: docker-image
