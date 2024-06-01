@@ -109,7 +109,7 @@ jobs:
           PREFECT_DEFAULT_DOCKER_BUILD_NAMESPACE: ${{ secrets.PREFECT_DOCKER_NAMESPACE }}
         run: |
           pip install -r requirements.txt
-          python /flows/flow.py
+          python ./flows/flow.py
 
       - name: action-slack
         uses: 8398a7/action-slack@v3
