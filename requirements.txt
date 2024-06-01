@@ -1,2 +1,2 @@
 prefect==2.18.3
-#requests==2.31.0
+requests==2.31.0
