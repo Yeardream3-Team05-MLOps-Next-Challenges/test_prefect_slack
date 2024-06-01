@@ -26,7 +26,7 @@ jobs:
       
     - name: Save Docker image as artifact
       run: docker save myapp:latest -o myapp.tar
-      
+
     - name: Upload Docker artifact
       uses: actions/upload-artifact@v2
       with:
@@ -60,7 +60,7 @@ jobs:
           name: docker-image
 
       - name: Load Docker image
-        run: docker load -i my-image.tar
+        run: docker load -i myapp.tar
 
       - name: Tag Docker image for local registry
         run: docker tag my-image:latest ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.3
