@@ -1,7 +1,7 @@
 from prefect import flow
 from prefect.deployments import DeploymentImage
 
-from .flows.flow import hello
+from flows.flow import hello
 
 
 if __name__ == "__main__":
