@@ -13,7 +13,7 @@ if __name__ == "__main__":
         work_queue_name="docker-agent",
         image=DeploymentImage(
             name="test-prefect-docker",
-            tag="0.3",
+            tag="0.11",
             network_mod='team5',
         ),
         cron="0 * * * *",
