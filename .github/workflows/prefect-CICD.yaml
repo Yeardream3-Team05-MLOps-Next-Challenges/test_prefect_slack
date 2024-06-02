@@ -53,9 +53,9 @@ jobs:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
       if: always() # Pick up events even if the job fails or is canceled.
 
-  deploy:
+  docker-deploy:
     needs: build
-    name: Deploy
+    name: Docker Deploy
     runs-on: ubuntu-latest
 
     steps:
@@ -71,10 +71,10 @@ jobs:
         run: docker load -i myapp.tar
 
       - name: Tag Docker image for local registry
-        run: docker tag myapp:latest ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.9
+        run: docker tag myapp:latest ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.10
 
       - name: Push Docker image to local registry
-        run: docker push ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.9
+        run: docker push ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.10
 
       - name: action-slack
         uses: 8398a7/action-slack@v3
@@ -89,9 +89,9 @@ jobs:
         if: always() # Pick up events even if the job fails or is canceled
 
 
-  post-deploy:
-    needs: deploy
-    name: Post-Deploy
+  prefect-deploy:
+    needs: docker-deploy
+    name: Prefect Deploy
     runs-on: ubuntu-latest
 
     steps:
@@ -109,7 +109,7 @@ jobs:
           PREFECT_DEFAULT_DOCKER_BUILD_NAMESPACE: ${{ secrets.PREFECT_DOCKER_NAMESPACE }}
         run: |
           pip install -r requirements.txt
-          python deploy.py
+          python flow.py
 
       - name: action-slack
         uses: 8398a7/action-slack@v3

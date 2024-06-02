@@ -1,7 +1,9 @@
 from prefect import flow
 from prefect.deployments import DeploymentImage
 
-from flows.flow import hello
+@flow(log_prints=True)
+def hello():
+    print("Hello!")
 
 
 if __name__ == "__main__":
@@ -9,7 +11,7 @@ if __name__ == "__main__":
         name="test-prefect-docker-deployment",
         work_pool_name="docker-agent-pool",
         work_queue_name="docker-agent",
-        image="test-prefect-docker:0.9",
+        image="test-prefect-docker:0.10",
         cron="0 * * * *",
-        build=False
+        build=False,
     )
