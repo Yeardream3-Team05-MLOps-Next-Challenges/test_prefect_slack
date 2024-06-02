@@ -9,7 +9,7 @@ if __name__ == "__main__":
         name="test-prefect-docker-deployment",
         work_pool_name="docker-agent-pool",
         work_queue_name="docker-agent",
-        image="test-prefect-docker:0.8",
+        image="test-prefect-docker:0.9",
         cron="0 * * * *",
         build=False
     )

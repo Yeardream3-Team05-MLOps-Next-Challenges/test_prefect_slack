@@ -27,7 +27,7 @@ jobs:
       uses: docker/setup-buildx-action@v3
 
     - name: Build Docker image
-      run: docker buildx build --platform linux/${{ matrix.arch }} --load -t myapp:latest .
+      run: docker buildx build --platform linux/${{ matrix.arch }} --build-arg PREFECT_API_URL=${{ secrets.PREFECT_API_URL }} --load -t myapp:latest .
 
     - name: Run Docker container
       run: docker run -d myapp:latest
@@ -71,10 +71,10 @@ jobs:
         run: docker load -i myapp.tar
 
       - name: Tag Docker image for local registry
-        run: docker tag myapp:latest ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.8
+        run: docker tag myapp:latest ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.9
 
       - name: Push Docker image to local registry
-        run: docker push ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.8
+        run: docker push ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-docker:0.9
 
       - name: action-slack
         uses: 8398a7/action-slack@v3
