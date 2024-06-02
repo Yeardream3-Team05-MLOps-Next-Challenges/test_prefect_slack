@@ -13,5 +13,6 @@ if __name__ == "__main__":
         work_queue_name="docker-agent",
         image="test-prefect-docker:0.10",
         cron="0 * * * *",
+        network_mode='team5'
         build=False,
     )
