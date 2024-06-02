@@ -11,8 +11,11 @@ if __name__ == "__main__":
         name="test-prefect-docker-deployment",
         work_pool_name="docker-agent-pool",
         work_queue_name="docker-agent",
-        image="test-prefect-docker:0.11",
+        image=DeploymentImage(
+            name="test-prefect-docker",
+            tag="0.3",
+            network_mod='team5',
+        ),
         cron="0 * * * *",
-        network_mode='team5',
         build=False,
     )
