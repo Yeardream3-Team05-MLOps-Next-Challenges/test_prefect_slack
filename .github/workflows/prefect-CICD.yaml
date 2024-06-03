@@ -108,6 +108,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Create Docker Network
+        run: docker network create team5
+        
       - name: Prefect Deploy
         env:
           PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
