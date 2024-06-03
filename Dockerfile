@@ -2,8 +2,10 @@ FROM prefecthq/prefect:2.18.3-python3.10
 
 # Define build-time variable
 #ARG PREFECT_API_URL
+ARG SLACK_WEBHOOK
 
 #ENV PREFECT_API_URL=$PREFECT_API_URL
+ENV SLACK_WEBHOOK=$SLACK_WEBHOOK
 
 COPY requirements.txt .
 

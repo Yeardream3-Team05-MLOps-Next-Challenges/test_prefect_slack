@@ -8,89 +8,89 @@ on:
 
 jobs:
 
-  build:
-    name: Build
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        arch: [ arm64 ]
+  # build:
+  #   name: Build
+  #   runs-on: ubuntu-22.04
+  #   strategy:
+  #     matrix:
+  #       arch: [ arm64 ]
 
-    steps:
-    - uses: actions/checkout@v3
+  #   steps:
+  #   - uses: actions/checkout@v3
 
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
-      with:
-        platforms: arm64
+  #   - name: Set up QEMU
+  #     uses: docker/setup-qemu-action@v2
+  #     with:
+  #       platforms: arm64
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+  #   - name: Set up Docker Buildx
+  #     uses: docker/setup-buildx-action@v3
 
-    - name: Build Docker image
-      run: docker buildx build --platform linux/${{ matrix.arch }} --load -t myapp:latest .
+  #   - name: Build Docker image
+  #     run: docker buildx build --platform linux/${{ matrix.arch }} --build-arg SLACK_WEBHOOK:=${{ secrets.SLACK_WEBHOOK }} --load -t myapp:latest .
 
-    - name: Run Docker container
-      run: docker run -d myapp:latest
+  #   - name: Run Docker container
+  #     run: docker run -d myapp:latest
       
-    - name: Save Docker image as artifact
-      run: docker save myapp:latest -o myapp.tar
+  #   - name: Save Docker image as artifact
+  #     run: docker save myapp:latest -o myapp.tar
 
-    - name: Upload Docker artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: docker-image
-        path: myapp.tar
+  #   - name: Upload Docker artifact
+  #     uses: actions/upload-artifact@v2
+  #     with:
+  #       name: docker-image
+  #       path: myapp.tar
 
-    - name: action-slack
-      uses: 8398a7/action-slack@v3
-      with:
-        status: ${{ job.status }}
-        author_name: Gibhub Actions - build
-        fields: repo,commit,message,author # action,eventName,ref,workflow,job,took 추가할 수 있음
-        mention: here
-        if_mention: failure,cancelled
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
-      if: always() # Pick up events even if the job fails or is canceled.
+  #   - name: action-slack
+  #     uses: 8398a7/action-slack@v3
+  #     with:
+  #       status: ${{ job.status }}
+  #       author_name: Gibhub Actions - build
+  #       fields: repo,commit,message,author # action,eventName,ref,workflow,job,took 추가할 수 있음
+  #       mention: here
+  #       if_mention: failure,cancelled
+  #     env:
+  #       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+  #     if: always() # Pick up events even if the job fails or is canceled.
 
-  docker-deploy:
-    needs: build
-    name: Docker Deploy
-    runs-on: ubuntu-latest
+  # docker-deploy:
+  #   needs: build
+  #   name: Docker Deploy
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
 
-      - name: Download Docker image artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: docker-image
+  #     - name: Download Docker image artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: docker-image
 
-      - name: Load Docker image
-        run: docker load -i myapp.tar
+  #     - name: Load Docker image
+  #       run: docker load -i myapp.tar
 
-      - name: Tag Docker image for local registry
-        run: docker tag myapp:latest ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-slack:0.12
+  #     - name: Tag Docker image for local registry
+  #       run: docker tag myapp:latest ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-slack:0.12
 
-      - name: Push Docker image to local registry
-        run: docker push ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-slack:0.12
+  #     - name: Push Docker image to local registry
+  #       run: docker push ${{ secrets.PREFECT_DOCKER_NAMESPACE }}/test-prefect-slack:0.12
 
-      - name: action-slack
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          author_name: Gibhub Actions - deploy
-          fields: repo,commit,message,author # action,eventName,ref,workflow,job,took 추가할 수 있음
-          mention: here
-          if_mention: failure,cancelled
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
-        if: always() # Pick up events even if the job fails or is canceled
+  #     - name: action-slack
+  #       uses: 8398a7/action-slack@v3
+  #       with:
+  #         status: ${{ job.status }}
+  #         author_name: Gibhub Actions - deploy
+  #         fields: repo,commit,message,author # action,eventName,ref,workflow,job,took 추가할 수 있음
+  #         mention: here
+  #         if_mention: failure,cancelled
+  #       env:
+  #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+  #       if: always() # Pick up events even if the job fails or is canceled
 
 
   prefect-deploy:
-    needs: docker-deploy
+    #needs: docker-deploy
     name: Prefect Deploy
     runs-on: ubuntu-latest
 
@@ -101,7 +101,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
       - name: Prefect Deploy
         env:

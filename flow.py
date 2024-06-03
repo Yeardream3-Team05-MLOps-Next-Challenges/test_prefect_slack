@@ -38,6 +38,7 @@ if __name__ == "__main__":
             network_mode='team5',
             buildargs={"SLACK_WEBHOOK": os.getenv("SLACK_WEBHOOK")},
         ),
+        platform="linux/arm64",
         cron="0 * * * *",
-        build=False,
+        build=True,
     )
