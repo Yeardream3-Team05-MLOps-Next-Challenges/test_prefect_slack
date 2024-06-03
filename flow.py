@@ -4,6 +4,7 @@ import json
 
 from prefect import flow
 from prefect.deployments import DeploymentImage
+from prefect.client.schemas.schedules import CronSchedule
 
 @flow(log_prints=True)
 def send_slack():
@@ -12,7 +13,7 @@ def send_slack():
 
     # 전송할 메시지
     message = {
-        'text': 'test_prefct_slack 메시지입니다.'
+        'text': 'Good morning!'
     }
 
     # HTTP POST 요청을 통해 메시지 전송
@@ -39,6 +40,6 @@ if __name__ == "__main__":
             platform="linux/arm64",
             buildargs={"SLACK_WEBHOOK": os.getenv("SLACK_WEBHOOK")},
         ),
-        cron="0 * * * *",
+        schedule=(CronSchedule(cron="0 8 * * *", timezone="Asia/Seoul")),
         build=True,
     )
