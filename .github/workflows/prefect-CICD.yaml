@@ -35,13 +35,6 @@ jobs:
         run: |
           pip install -r requirements.txt
           python flow.py
-          docker buildx build \
-          --platform linux/${{ matrix.arch }} \
-          --build-arg SLACK_WEBHOOK:=SLACK_WEBHOOK \
-          --build-arg PREFECT_API_URL:=$PREFECT_API_URL \
-          --build-arg PREFECT_DEFAULT_DOCKER_BUILD_NAMESPACE:=$PREFECT_DEFAULT_DOCKER_BUILD_NAMESPACE \
-          --load -t myapp:latest .
-          docker run -d myapp:latest
 
       - name: action-slack
         uses: 8398a7/action-slack@v3
