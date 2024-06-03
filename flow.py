@@ -37,7 +37,7 @@ if __name__ == "__main__":
             tag="0.13",
             dockerfile="Dockerfile",
             platform="linux/arm64",
-            network='team5',
+            networks='team5',
             buildargs={"SLACK_WEBHOOK": os.getenv("SLACK_WEBHOOK")},
         ),
         cron="0 * * * *",
