@@ -34,10 +34,9 @@ if __name__ == "__main__":
         work_queue_name="docker-agent",
         image=DeploymentImage(
             name="test-prefect-slack",
-            tag="0.13",
+            tag="0.14",
             dockerfile="Dockerfile",
             platform="linux/arm64",
-            networks='team5',
             buildargs={"SLACK_WEBHOOK": os.getenv("SLACK_WEBHOOK")},
         ),
         cron="0 * * * *",
