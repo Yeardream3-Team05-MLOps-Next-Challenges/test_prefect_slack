@@ -35,10 +35,10 @@ if __name__ == "__main__":
         image=DeploymentImage(
             name="test-prefect-slack",
             tag="0.12",
+            platform="linux/arm64",
             network_mode='team5',
             buildargs={"SLACK_WEBHOOK": os.getenv("SLACK_WEBHOOK")},
         ),
-        platform="linux/arm64",
         cron="0 * * * *",
         build=True,
     )
