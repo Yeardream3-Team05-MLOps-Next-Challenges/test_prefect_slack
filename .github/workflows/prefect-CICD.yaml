@@ -33,6 +33,7 @@ jobs:
           PREFECT_DEFAULT_DOCKER_BUILD_NAMESPACE: ${{ secrets.PREFECT_DOCKER_NAMESPACE }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }} 
         run: |
+          pip install -r requirements.txt
           python deploy.py
 
       - name: action-slack
