@@ -12,7 +12,7 @@ if __name__ == "__main__":
         work_queue_name="docker-agent",
         image=DeploymentImage(
             name="test-prefect-slack",
-            tag="1.0",
+            tag="1.0.1",
             dockerfile="Dockerfile",
             platform="linux/arm64",
             buildargs={"SLACK_WEBHOOK": os.getenv("SLACK_WEBHOOK")},
